@@ -1,7 +1,13 @@
 # The Wild Oasis
 
-A hotel management web app - [Link](https://the-wild-oasis-mgmt.vercel.app/)
+A hotel management web app made using React & Supabase
 <br><br>
+
+**Links**
+
+- [Web App](https://the-wild-oasis-mgmt.vercel.app/)
+- [Demo Video](https://youtu.be/vajksh7zW9M)
+  <br><br>
 
 **Features**
 
