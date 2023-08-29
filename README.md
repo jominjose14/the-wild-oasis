@@ -1,15 +1,18 @@
 # The Wild Oasis
 
-A hotel management web app
+A hotel management web app - [Link](https://the-wild-oasis-mgmt.vercel.app/)
+<br><br>
 
-Features
+**Features**
 
 - Stats dashboard with KPIs
 - CRUD (users, cabins, bookings)
 - JWT Authentication
 - Dark Mode
 
-Tech Stack
+<br>
+
+**Tech Stack**
 
 - React
 - React Router
