@@ -108,14 +108,17 @@ const startDataDark = [
   },
 ];
 
-function prepareData(startData, stays, isTestMode) {
-  if (isTestMode === true) {
-    return startData.map((obj) => {
-      obj.value = Math.floor(Math.random() * 11);
-      return obj;
-    });
-  }
+function prepareTestData(startData) {
+  return startData.map((obj) => {
+    const copy = {};
+    copy.duration = obj.duration;
+    copy.value = Math.floor(Math.random() * 11);
+    copy.color = obj.color;
+    return copy;
+  });
+}
 
+function prepareData(startData, stays) {
   function incArrayValue(arr, field) {
     return arr.map((obj) =>
       obj.duration === field ? { ...obj, value: obj.value + 1 } : obj
@@ -143,7 +146,9 @@ function prepareData(startData, stays, isTestMode) {
 function DurationChart({ confirmedStays }) {
   const { isDarkMode, isTestMode } = useAppCtx();
   const startData = isDarkMode ? startDataDark : startDataLight;
-  const data = prepareData(startData, confirmedStays, isTestMode);
+  const data = isTestMode
+    ? prepareTestData(startData)
+    : prepareData(startData, confirmedStays);
 
   return (
     <ChartBox>
