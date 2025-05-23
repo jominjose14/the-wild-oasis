@@ -46,7 +46,7 @@ const testActivities = [
   {
     id: 1,
     status: 'checked-in',
-    guests: {
+    'wild-oasis-guests': {
       countryFlag: 'https://flagcdn.com/de.svg',
       country: 'India',
       fullName: 'Alice Mugglestone',
@@ -56,7 +56,7 @@ const testActivities = [
   {
     id: 2,
     status: 'unconfirmed',
-    guests: {
+    'wild-oasis-guests': {
       countryFlag: 'https://flagcdn.com/us.svg',
       country: 'USA',
       fullName: 'Dan Brown',
@@ -66,7 +66,7 @@ const testActivities = [
   {
     id: 3,
     status: 'checked-in',
-    guests: {
+    'wild-oasis-guests': {
       countryFlag: 'https://flagcdn.com/fr.svg',
       country: 'France',
       fullName: 'Nicholas Jackson',
@@ -74,9 +74,9 @@ const testActivities = [
     numNights: 2,
   },
   {
-    id: 2,
+    id: 4,
     status: 'unconfirmed',
-    guests: {
+    'wild-oasis-guests': {
       countryFlag: 'https://flagcdn.com/us.svg',
       country: 'USA',
       fullName: 'Dan Brown',
@@ -84,12 +84,12 @@ const testActivities = [
     numNights: 5,
   },
   {
-    id: 1,
+    id: 5,
     status: 'checked-in',
-    guests: {
+    'wild-oasis-guests': {
       countryFlag: 'https://flagcdn.com/de.svg',
       country: 'India',
-      fullName: 'Alice Mugglestone',
+      fullName: 'Parvati Gandhi',
     },
     numNights: 3,
   },

@@ -115,8 +115,14 @@ function BookingDataBox({ booking }) {
     hasBreakfast,
     observations,
     isPaid,
-    guests: { fullName: guestName, email, country, countryFlag, nationalID },
-    cabins: { name: cabinName },
+    'wild-oasis-guests': {
+      fullName: guestName,
+      email,
+      country,
+      countryFlag,
+      nationalID,
+    },
+    'wild-oasis-cabins': { name: cabinName },
   } = booking;
 
   return (

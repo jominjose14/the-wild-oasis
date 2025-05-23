@@ -1,7 +1,9 @@
-import supabase, { supabaseUrl } from './supabase.js';
+import supabase, { supabaseUrl, TABLE_PREFIX } from './supabase.js';
+
+const table = TABLE_PREFIX + 'cabins';
 
 export async function getCabins() {
-  const { data, error } = await supabase.from('cabins').select('*');
+  const { data, error } = await supabase.from(table).select('*');
 
   if (error) {
     console.error(error);
@@ -16,7 +18,7 @@ export async function createCabin(newCabin) {
   const hasValidImageFile =
     newCabin.image && !newCabin.image.startsWith?.(supabaseUrl);
 
-  // https://wvouvysfsptzxidrqqbe.supabase.co/storage/v1/object/public/cabin-images/cabin-001.jpg
+  // https://[PROJECT_ID].supabase.co/storage/v1/object/public/cabin-images/cabin-001.jpg
   const imageName =
     hasValidImageFile &&
     `${Math.random()}-${newCabin.image.name}`.replace('/', '');
@@ -27,7 +29,7 @@ export async function createCabin(newCabin) {
 
   // 1. Create cabin
   const { data, error: createError } = await supabase
-    .from('cabins')
+    .from(table)
     .insert([newCabin])
     .select()
     .single();
@@ -49,7 +51,7 @@ export async function createCabin(newCabin) {
   // 3. Delete cabin if there was an image storageError
   if (storageError) {
     const { error: deleteError } = await supabase
-      .from('cabins')
+      .from(table)
       .delete()
       .eq('id', data.id);
 
@@ -70,7 +72,7 @@ export async function createCabin(newCabin) {
 }
 
 export async function updateCabin(updatedCabin, id) {
-  // https://wvouvysfsptzxidrqqbe.supabase.co/storage/v1/object/public/cabin-images/cabin-001.jpg
+  // https://[PROJECT_ID].supabase.co/storage/v1/object/public/cabin-images/cabin-001.jpg
   const isNewImage =
     updatedCabin.image && !updatedCabin.image.startsWith?.(supabaseUrl);
 
@@ -84,7 +86,7 @@ export async function updateCabin(updatedCabin, id) {
   }
 
   const { data, error: updateError } = await supabase
-    .from('cabins')
+    .from(table)
     .update(updatedCabin)
     .eq('id', id)
     .select()
@@ -114,7 +116,7 @@ export async function updateCabin(updatedCabin, id) {
 }
 
 export async function deleteCabin(id) {
-  const { data, error } = await supabase.from('cabins').delete().eq('id', id);
+  const { data, error } = await supabase.from(table).delete().eq('id', id);
 
   if (error) {
     console.error(error);

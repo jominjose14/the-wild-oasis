@@ -34,7 +34,7 @@ function CheckinBooking() {
 
   const {
     id: bookingId,
-    guests: { fullName } = {},
+    'wild-oasis-guests': { fullName } = {},
     totalPrice,
     numGuests,
     hasBreakfast,

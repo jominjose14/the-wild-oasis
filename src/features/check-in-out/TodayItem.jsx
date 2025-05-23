@@ -25,7 +25,7 @@ const Guest = styled.div`
 `;
 
 function TodayItem({ activity }) {
-  const { id, status, guests: guest, numNights } = activity;
+  const { id, status, 'wild-oasis-guests': guest, numNights } = activity;
 
   return (
     <StyledTodayItem>

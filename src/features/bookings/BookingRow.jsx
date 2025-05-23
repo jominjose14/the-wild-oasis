@@ -56,8 +56,8 @@ function BookingRow({
     numGuests,
     totalPrice,
     status,
-    guests: { fullName: guestName, email },
-    cabins: { name: cabinName },
+    'wild-oasis-guests': { fullName: guestName, email },
+    'wild-oasis-cabins': { name: cabinName },
   },
 }) {
   const navigate = useNavigate();
