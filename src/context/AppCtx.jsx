@@ -1,9 +1,9 @@
 import { createContext, useContext, useEffect } from 'react';
 import { useLocalStorageState } from '../hooks/useLocalStorageState.js';
 
-const DarkModeContext = createContext();
+const AppCtx = createContext();
 
-function DarkModeProvider({ children }) {
+function AppCtxProvider({ children }) {
   const doesPreferDarkMode = window.matchMedia(
     '(prefers-color-scheme: dark)'
   ).matches;
@@ -11,6 +11,7 @@ function DarkModeProvider({ children }) {
     doesPreferDarkMode,
     'isDarkMode'
   );
+  const [isTestMode, setIsTestMode] = useLocalStorageState(true, 'isTestMode');
 
   useEffect(
     function () {
@@ -29,18 +30,24 @@ function DarkModeProvider({ children }) {
     setIsDarkMode((isDarkMode) => !isDarkMode);
   }
 
+  function toggleTestMode() {
+    setIsTestMode((isTestMode) => !isTestMode);
+  }
+
   return (
-    <DarkModeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
+    <AppCtx.Provider
+      value={{ isDarkMode, toggleDarkMode, isTestMode, toggleTestMode }}
+    >
       {children}
-    </DarkModeContext.Provider>
+    </AppCtx.Provider>
   );
 }
 
-function useDarkMode() {
-  const value = useContext(DarkModeContext);
+function useAppCtx() {
+  const value = useContext(AppCtx);
   if (value === undefined)
-    throw new Error('DarkModeContext was used outside DarkModeProvider');
+    throw new Error('AppCtx was used outside AppCtxProvider');
   return value;
 }
 
-export { DarkModeProvider, useDarkMode };
+export { AppCtxProvider, useAppCtx };

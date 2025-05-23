@@ -5,6 +5,7 @@ import Row from '../../ui/Row';
 import { useTodayActivity } from './useTodayActivity.js';
 import Spinner from '../../ui/Spinner.jsx';
 import TodayItem from './TodayItem.jsx';
+import { useAppCtx } from '../../context/AppCtx.jsx';
 
 const StyledToday = styled.div`
   /* Box */
@@ -96,6 +97,7 @@ const testActivities = [
 
 function TodayActivity() {
   const { activities, isLoading } = useTodayActivity();
+  const { isTestMode } = useAppCtx();
 
   return (
     <StyledToday>
@@ -103,19 +105,28 @@ function TodayActivity() {
         <Heading as='h2'>Today</Heading>
       </Row>
 
-      {!isLoading ? (
-        activities?.length > 0 ? (
-          <TodayList>
-            {activities.map((activity) => (
-              <TodayItem activity={activity} key={activity.id} />
-            ))}
-          </TodayList>
-        ) : (
-          <NoActivity>No activity today</NoActivity>
-        )
-      ) : (
-        <Spinner />
+      {isTestMode && (
+        <TodayList>
+          {testActivities.map((activity) => (
+            <TodayItem activity={activity} key={activity.id} />
+          ))}
+        </TodayList>
       )}
+
+      {!isTestMode &&
+        (!isLoading ? (
+          activities?.length > 0 ? (
+            <TodayList>
+              {activities.map((activity) => (
+                <TodayItem activity={activity} key={activity.id} />
+              ))}
+            </TodayList>
+          ) : (
+            <NoActivity>No activity today</NoActivity>
+          )
+        ) : (
+          <Spinner />
+        ))}
     </StyledToday>
   );
 }

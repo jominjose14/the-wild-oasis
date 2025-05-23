@@ -10,7 +10,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { useDarkMode } from '../../context/DarkModeContext.jsx';
+import { useAppCtx } from '../../context/AppCtx.jsx';
 import { eachDayOfInterval, format, isSameDay, subDays } from 'date-fns';
 
 const StyledSalesChart = styled(DashboardBox)`
@@ -57,22 +57,55 @@ const StyledSalesChart = styled(DashboardBox)`
 // ];
 
 function SalesChart({ bookings, numDays }) {
-  const { isDarkMode } = useDarkMode();
+  const { isDarkMode, isTestMode } = useAppCtx();
 
   const allDates = eachDayOfInterval({
     start: subDays(new Date(), numDays - 1),
     end: new Date(),
   });
 
-  const data = allDates.map((date) => ({
-    label: format(date, 'MMM dd'),
-    totalSales: bookings
-      .filter((booking) => isSameDay(date, new Date(booking.created_at)))
-      .reduce((acc, cur) => acc + cur.totalPrice, 0),
-    extrasSales: bookings
-      .filter((booking) => isSameDay(date, new Date(booking.created_at)))
-      .reduce((acc, cur) => acc + cur.extrasPrice, 0),
-  }));
+  const data = isTestMode
+    ? [
+        {
+          label: 'JAN 04',
+          totalSales: 250,
+          extrasSales: 150,
+        },
+        {
+          label: 'JAN 08',
+          totalSales: 450,
+          extrasSales: 350,
+        },
+        {
+          label: 'JAN 14',
+          totalSales: 1000,
+          extrasSales: 900,
+        },
+        {
+          label: 'JAN 18',
+          totalSales: 100,
+          extrasSales: 50,
+        },
+        {
+          label: 'JAN 20',
+          totalSales: 300,
+          extrasSales: 200,
+        },
+        {
+          label: 'JAN 25',
+          totalSales: 1200,
+          extrasSales: 1000,
+        },
+      ]
+    : allDates.map((date) => ({
+        label: format(date, 'MMM dd'),
+        totalSales: bookings
+          .filter((booking) => isSameDay(date, new Date(booking.created_at)))
+          .reduce((acc, cur) => acc + cur.totalPrice, 0),
+        extrasSales: bookings
+          .filter((booking) => isSameDay(date, new Date(booking.created_at)))
+          .reduce((acc, cur) => acc + cur.extrasPrice, 0),
+      }));
 
   const colors = isDarkMode
     ? {
@@ -91,8 +124,12 @@ function SalesChart({ bookings, numDays }) {
   return (
     <StyledSalesChart>
       <Heading as='h2'>
-        Sales ({format(allDates.at(0), 'do MMM yyyy')} to{' '}
-        {format(allDates.at(-1), 'do MMM yyyy')})
+        {isTestMode
+          ? 'Sales (4th Jan 2025 to 31st Jan 2025)'
+          : `Sales (${format(allDates.at(0), 'do MMM yyyy')} to ${format(
+              allDates.at(-1),
+              'do MMM yyyy'
+            )})`}
       </Heading>
       <ResponsiveContainer height={300} width='100%'>
         <AreaChart data={data}>

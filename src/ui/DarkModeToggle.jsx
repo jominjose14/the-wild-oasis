@@ -1,12 +1,15 @@
 import ButtonIcon from './ButtonIcon.jsx';
 import { HiOutlineMoon, HiOutlineSun } from 'react-icons/hi2';
-import { useDarkMode } from '../context/DarkModeContext.jsx';
+import { useAppCtx } from '../context/AppCtx.jsx';
 
 function DarkModeToggle() {
-  const { isDarkMode, toggleDarkMode } = useDarkMode();
+  const { isDarkMode, toggleDarkMode } = useAppCtx();
 
   return (
-    <ButtonIcon onClick={toggleDarkMode}>
+    <ButtonIcon
+      onClick={toggleDarkMode}
+      title={isDarkMode ? 'Light Mode' : 'Dark Mode'}
+    >
       {isDarkMode ? <HiOutlineSun /> : <HiOutlineMoon />}
     </ButtonIcon>
   );

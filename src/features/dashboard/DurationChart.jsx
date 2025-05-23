@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Heading from '../../ui/Heading.jsx';
 import { Cell, Legend, ResponsiveContainer, Tooltip } from 'recharts';
 import { PieChart, Pie } from 'recharts';
-import { useDarkMode } from '../../context/DarkModeContext.jsx';
+import { useAppCtx } from '../../context/AppCtx.jsx';
 
 const ChartBox = styled.div`
   /* Box */
@@ -108,7 +108,14 @@ const startDataDark = [
   },
 ];
 
-function prepareData(startData, stays) {
+function prepareData(startData, stays, isTestMode) {
+  if (isTestMode === true) {
+    return startData.map((obj) => {
+      obj.value = Math.floor(Math.random() * 11);
+      return obj;
+    });
+  }
+
   function incArrayValue(arr, field) {
     return arr.map((obj) =>
       obj.duration === field ? { ...obj, value: obj.value + 1 } : obj
@@ -134,9 +141,9 @@ function prepareData(startData, stays) {
 }
 
 function DurationChart({ confirmedStays }) {
-  const { isDarkMode } = useDarkMode();
+  const { isDarkMode, isTestMode } = useAppCtx();
   const startData = isDarkMode ? startDataDark : startDataLight;
-  const data = prepareData(startData, confirmedStays);
+  const data = prepareData(startData, confirmedStays, isTestMode);
 
   return (
     <ChartBox>

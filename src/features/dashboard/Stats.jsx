@@ -6,8 +6,10 @@ import {
   HiOutlineChartBar,
 } from 'react-icons/hi2';
 import { formatCurrency } from '../../utils/helpers.js';
+import { useAppCtx } from '../../context/AppCtx.jsx';
 
 function Stats({ bookings, confirmedStays, numDays, cabinCount }) {
+  const { isTestMode } = useAppCtx();
   const numBookings = bookings.length;
   const sales = bookings.reduce((acc, cur) => acc + cur.totalPrice, 0);
   const checkins = confirmedStays.length;
@@ -21,25 +23,25 @@ function Stats({ bookings, confirmedStays, numDays, cabinCount }) {
         title='Bookings'
         color='blue'
         icon={<HiOutlineBriefcase />}
-        value={numBookings}
+        value={isTestMode ? 52 : numBookings}
       />
       <Stat
         title='Sales'
         color='green'
         icon={<HiOutlineBanknotes />}
-        value={formatCurrency(sales)}
+        value={isTestMode ? formatCurrency(45120) : formatCurrency(sales)}
       />
       <Stat
         title='Check ins'
         color='indigo'
         icon={<HiOutlineCalendarDays />}
-        value={checkins}
+        value={isTestMode ? 33 : checkins}
       />
       <Stat
         title='Occupancy rate'
         color='yellow'
         icon={<HiOutlineChartBar />}
-        value={Math.round(occupation * 100) + '%'}
+        value={isTestMode ? '93%' : Math.round(occupation * 100) + '%'}
       />
     </>
   );
